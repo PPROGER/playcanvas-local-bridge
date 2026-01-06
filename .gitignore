@@ -9,7 +9,7 @@ pcsync.json
 *.pem
 *.key
 
-src/*
+# src/*
 
 //zK7pmEgeH7ZaRdkS8kySNOAi1uGnNRB4
 //2374490
