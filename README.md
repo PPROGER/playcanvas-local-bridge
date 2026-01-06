@@ -97,9 +97,7 @@ To allow dev-hook to intercept loading, the engine must not load scripts automat
 Run the local server. It will watch your `src` folder.
 
 ```bash
-node server.js
-# Or if you configured package.json:
-# pnpm dev
+pnpm dev
 ```
 
 ### 2. Launch with Local Mode
