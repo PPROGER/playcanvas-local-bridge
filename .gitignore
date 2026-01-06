@@ -2,17 +2,17 @@ node_modules/
 .DS_Store
 dist/
 
-# Локальные конфиги PlayCanvas (содержат API Key!)
+
 pcsync.json
 
-# SSL сертификаты (они уникальны для каждого компа)
+# SSL 
 *.pem
 *.key
 
-# src/*
+src/*
 
 //zK7pmEgeH7ZaRdkS8kySNOAi1uGnNRB4
 //2374490
-# Логи
+
 npm-debug.log*
 pnpm-debug.log*
