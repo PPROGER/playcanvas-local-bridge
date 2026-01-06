@@ -71,7 +71,7 @@ You need to add a "Hook" script to your PlayCanvas project. This script manages 
 
 In the PlayCanvas Editor assets, create a new script named `dev-hook.js`.
 
-Copy the content from the [dev-hook.js](dev-hook.js) file included in this repository and paste it into your PlayCanvas script.
+Copy the content from the [dev-hook.js](/tools/pc-scripts//dev-hook.js) file included in this repository and paste it into your PlayCanvas script.
 
 ### 2. Configure Loading Order (Critical!)
 
