@@ -4,6 +4,8 @@ A professional local development environment for PlayCanvas. This tool allows yo
 
 ## 🚀 Workflow Overview
 
+![Workflow Diagram](docs/diagram_flow.png)
+
 1. **Code Locally:** Your game code lives in the `src/` folder (which is a clone of your game repository).
 2. **Mirror Server:** A Node.js server serves these files over HTTPS.
 3. **Dev Hook:** A special script in PlayCanvas intercepts loading requests.
@@ -46,7 +48,7 @@ git clone https://github.com/username/my-game-scripts.git src
 Now, `src/` contains your scripts like `src/Scripts/Player/player.js`, etc.
 
 **📘 Need help setting up your PlayCanvas project repository with GitHub sync?**
-See the detailed guide: [PlayCanvas Project Setup - GitHub Sync](PLAYCANVAS_PROJECT_SETUP.md)
+See the detailed guide: [PlayCanvas Project Setup - GitHub Sync](docs/PLAYCANVAS_PROJECT_SETUP.md)
 
 ### 3. Generate SSL Certificates
 
