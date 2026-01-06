@@ -43,7 +43,10 @@ This tool expects your game logic to be inside a folder named `src`. Clone your 
 git clone https://github.com/username/my-game-scripts.git src
 ```
 
-Now, `src/` contains your scripts like `src/game/player.js`, etc.
+Now, `src/` contains your scripts like `src/Scripts/Player/player.js`, etc.
+
+**📘 Need help setting up your PlayCanvas project repository with GitHub sync?**
+See the detailed guide: [PlayCanvas Project Setup - GitHub Sync](PLAYCANVAS_PROJECT_SETUP.md)
 
 ### 3. Generate SSL Certificates
 
