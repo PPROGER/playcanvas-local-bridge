@@ -70,28 +70,41 @@ You should now see `localhost.pem` and `localhost-key.pem` in your project root.
 
 ## 🎨 PlayCanvas Editor Setup
 
-You need to add a "Hook" script to your PlayCanvas project. This script manages the loading process.
+You need to add a "Loading Hook" script to your PlayCanvas project. This script intercepts asset loading and redirects script requests to your local server when in development mode.
 
-### 1. Create the Script
+### 1. Create the Loading Hook Asset
 
-In the PlayCanvas Editor assets, create a new script named `dev-hook.js`.
+In the PlayCanvas Editor assets, create a new **Script** asset named `loading-hook.js`.
 
-Copy the content from the [dev-hook.js](/tools/pc-scripts//dev-hook.js) file included in this repository and paste it into your PlayCanvas script.
+Copy the content from the [loading-hook.js](tools/pc-scripts/loading-hook.js) file included in this repository and paste it into your PlayCanvas script.
 
-### 2. Configure Loading Order (Critical!)
+### 2. Add to Loading Screen (Critical!)
 
-1. Go to **Settings ⚙️ -> Scripts**.
-2. Drag `dev-hook.js` to **position #1** (The very top).
-3. Ensure `dev-hook.js` has **"Preload" ✅ CHECKED**.
+1. Go to **Settings ⚙️ -> Loading Screen**.
+2. In the **Scripts** section, click **"Add Script"**.
+3. Select `loading-hook.js` from the asset picker.
 
-### 3. Disable Preload for Game Scripts
+This ensures the hook executes **before** any game scripts are loaded, allowing it to intercept the asset loading system.
 
-To allow dev-hook to intercept loading, the engine must not load scripts automatically.
+**That's it!** Unlike older approaches, you don't need to disable preload on your game scripts. The loading hook works by intercepting the `pc.Asset.prototype.getFileUrl()` method, allowing scripts to load normally while redirecting them to localhost in development mode.
 
-1. Select all your game scripts in the Assets panel (everything inside your src equivalent).
-2. **Uncheck "Preload" ⬜**.
+### How the Loading Hook Works
 
-**Don't worry:** The dev-hook script has a "Bootstrap" logic that will automatically load them for you, whether you are in Local Mode or Production Mode.
+The `loading-hook.js` uses a sophisticated approach to seamlessly redirect script loading:
+
+1. **Detection:** Checks for `?local=true` parameter in the URL
+2. **File Map:** Fetches a map of available scripts from `localhost:3000/file-map`
+3. **Asset Patching:** Overrides `pc.Asset.prototype.getFileUrl()` to intercept script loading
+4. **Smart Redirection:** When a script asset is requested:
+   - If it's in the file map → redirects to `localhost:3000/src/...`
+   - Otherwise → uses the original PlayCanvas cloud URL
+5. **Cache Busting:** Adds timestamp to local URLs for instant updates
+
+**Key Advantages:**
+- ✅ No need to disable preload on game scripts
+- ✅ Works with existing PlayCanvas loading pipeline
+- ✅ Seamless fallback to production mode
+- ✅ Selective override (only mapped files are redirected)
 
 ---
 
@@ -118,9 +131,8 @@ Open the browser console (F12). You should see:
 
 **Success:**
 ```
-🔧 MODE: LOCAL DEV
-🗺️ Map loaded from localhost
-✅ Override: your-script-name.js (for each of your files)
+🔧 MODE: LOCAL DEV (Hooking Asset System)
+✅ Asset loader patched
 ```
 
 **Troubleshooting:**
