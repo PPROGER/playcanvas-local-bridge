@@ -36,7 +36,8 @@ const getFileMap = (dir, baseDir, fileList = {}) => {
     if (fs.statSync(fullPath).isDirectory()) {
       getFileMap(fullPath, baseDir, fileList);
     } else {
-      if (file.endsWith(".js") || file.endsWith(".mjs")) {
+      const ext = path.extname(file);
+      if (ext === ".js" || ext === ".mjs" || ext === ".glsl") {
         const relativePath = path
           .relative(baseDir, fullPath)
           .replace(/\\/g, "/");

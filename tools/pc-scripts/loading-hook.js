@@ -4,7 +4,7 @@
 
     if (!isLocal) return;
 
-    console.log('🔧 MODE: LOCAL DEV (Hooking Asset System)');
+    console.log('%c🔧 MODE: LOCAL DEV (Aggressive Hook)', 'background: #222; color: #bada55');
     var LOCAL_ROOT = 'https://localhost:' + LOCAL_PORT;
     var fileMap = null;
 
@@ -14,20 +14,24 @@
         xhr.send(null);
         if (xhr.status === 200) {
             fileMap = JSON.parse(xhr.responseText);
+            console.log('🗺️ File map loaded:', Object.keys(fileMap).length, 'files');
         }
     } catch (e) {
-        console.error('❌ Localhost hook failed', e);
+        console.error('❌ Localhost hook failed to load map', e);
+        return;
     }
 
     if (fileMap && pc.Asset && pc.Asset.prototype) {
         var originalGetFileUrl = pc.Asset.prototype.getFileUrl;
+
         pc.Asset.prototype.getFileUrl = function () {
             var file = this.file;
-            if (this.type === 'script' && file && file.filename && fileMap[file.filename]) {
+            if (file && file.filename && fileMap[file.filename]) {
                 return LOCAL_ROOT + '/src/' + fileMap[file.filename] + '?t=' + Date.now();
             }
             return originalGetFileUrl.call(this);
         };
-        console.log('✅ Asset loader patched');
+
+        console.log('✅ Asset system patched (ALL types)');
     }
 })();
